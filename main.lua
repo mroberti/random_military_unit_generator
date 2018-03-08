@@ -1,3 +1,9 @@
+screenW = display.contentWidth
+screenH = display.contentHeight
+centerX  = display.contentWidth/2
+centerY = display.contentHeight/2
+
+
 function ordinal_numbers(n)
   local ordinal, digit = {"st", "nd", "rd"}, string.sub(n, -1)
   if tonumber(digit) > 0 and tonumber(digit) <= 3 and string.sub(n,-2) ~= 11 and string.sub(n,-2) ~= 12 and string.sub(n,-2) ~= 13 then
@@ -22,12 +28,28 @@ function UnitCreator()
     end
     local tempNumber2 = math.random(1,999)
     tempstring = tempstring..ordinal_numbers(tempNumber2).." "
-    local UnitType = {"Grenadiers ","Regiment ","Battalion ","Horse ", "Carabiniers ","Light Horse ","Rejects ","Guards ","Fusiliers ","Regiment ","Hussars ", "Dragoons ", "Shock Troops ","Iron Strike ", "Cavalliers ", "Deathbringers ","Blazing Fury ","Pikemen ","Defenders ","Blackwatch ","Executioners "}
+    local UnitType = {"Grenadiers ","Regiment ","Battalion ","Horsemen ", "Carabiniers ","Light Horse ","Rejects ","Guards ","Fusiliers ","Regiment ","Hussars ", "Dragoons ", "Shock Troops ","Iron Strike ", "Cavalliers ", "Deathbringers ","Blazing Fury ","Pikemen ","Defenders ","Blackwatch ","Executioners "}
     tempstring = tempstring..UnitType[math.random(1,#UnitType)]     
 
     return tempstring
 end
 
-for i=1,15 do
-    print("Unit: "..UnitCreator())
+local lineSize = 38
+for i=1,screenH/lineSize do
+    local options = 
+    {
+        --parent = groupObj,
+        text = UnitCreator(),     
+        x = 10,
+        y = (i-1)*lineSize,
+        width = screenW*.80,            --required for multiline and alignment
+        height = 100,           --required for multiline and alignment
+        --          font = "Lato Black",   
+        fontSize = lineSize*.9,
+        align = "left"          --new alignment field
+    }
+    local textObject = display.newText( options )
+    textObject.anchorX = 0
+    textObject.anchorY = 0
 end
+
